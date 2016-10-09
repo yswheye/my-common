@@ -35,3 +35,4 @@ captures/
 .classpath
 .project
 .settings/
+.idea/

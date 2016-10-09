@@ -13,6 +13,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.text.TextUtils;
+
 /**
  * <p>
  * Operations on {@link String} that are {@code null} safe.
@@ -7614,9 +7616,13 @@ public class StringUtils {
 
 	}
 
+	/**
+	 * 字符串为数字
+	 * @param str
+	 * @return
+	 */
 	public static boolean isNumber(String str) {
-		Pattern pattern = Pattern
-				.compile("[\\d-]+");
+		Pattern pattern = Pattern.compile("[\\d-]+");
 		Matcher match = pattern.matcher(str);
 		if (match.matches() == false) {
 			return false;
@@ -7624,4 +7630,121 @@ public class StringUtils {
 			return true;
 		}
 	}
+	
+	/**
+     * 字符串为字母
+     */
+    public static boolean isLetter(String letter) {
+        if (TextUtils.isEmpty(letter))
+            return false;
+        else
+            return letter.matches("^[a-zA-Z]*");
+    }
+
+    /**
+     * 字符串是否含有汉字汉字
+     */
+    public static boolean hasChinese(String str) {
+        if (TextUtils.isEmpty(str))
+            return false;
+        else {
+            String regEx = "[\u4e00-\u9fa5]";
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(str);
+            if (m.find())
+                return true;
+            else
+                return false;
+        }
+    }
+    
+    /**
+     * 判断数字是奇数还是偶数
+     */
+    public static int isEvenNumbers(String even) {
+        if (!TextUtils.isEmpty(even) && isNumber(even)) {
+            int i = Integer.parseInt(even);
+            if (i % 2 == 0) {
+                //偶数
+                return 2;
+            } else {
+                //奇数
+                return 1;
+            }
+        } else {
+            //不是奇数也不是偶数
+            return 0;
+        }
+    }
+
+    /**
+     * 判断字符串是否字母开头
+     */
+    public static boolean isLetterBegin(String s) {
+        if (TextUtils.isEmpty(s))
+            return false;
+        else {
+            char c = s.charAt(0);
+            int i = (int) c;
+            if ((i >= 65 && i <= 90) || (i >= 97 && i <= 122)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * 判断字符串是否以指定内容开头
+     */
+    public static boolean startWithMytext(String mytext, String begin) {
+        if (TextUtils.isEmpty(mytext) && TextUtils.isEmpty(begin))
+            return false;
+        else {
+            if (mytext.startsWith(begin))
+                return true;
+            else
+                return false;
+        }
+    }
+
+    /**
+     * 判断字符串是否以指定内容结尾
+     */
+    public static boolean endWithMytext(String mytext, String end) {
+        if (TextUtils.isEmpty(mytext) && TextUtils.isEmpty(end))
+            return false;
+        else {
+            if (mytext.endsWith(end))
+                return true;
+            else
+                return false;
+        }
+    }
+
+    /**
+     * 判断字符串中是否含有指定内容
+     */
+    public static boolean hasMytext(String string, String mytext) {
+        if (TextUtils.isEmpty(string) && TextUtils.isEmpty(mytext))
+            return false;
+        else {
+            if (string.contains(mytext))
+                return true;
+            else
+                return false;
+        }
+    }
+    
+    /**
+     * 验证是否是邮箱格式格式
+     */
+    public static boolean isEmailAdd(String email) {
+        String emailRegex = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        if (TextUtils.isEmpty(email))
+            return false;
+        else
+            return email.matches(emailRegex);
+    }
+    
 }
